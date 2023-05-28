@@ -1,0 +1,278 @@
+
+# 配置
+$ git config --global user.name "qq378287007"
+$ git config --global user.email "qq378287007@163.com"
+
+# 初始化仓库
+$ mkdir learngit
+$ cd learngit
+$ git init
+
+# 添加文件
+$ cat>readme.txt <<-EOF
+> Git is a version control system.
+> Git is free software.
+> EOF
+
+$ git add readme.txt
+$ git commit -m "wrote a readme file"
+
+# 版本回退
+$ cat>readme.txt <<-EOF
+> Git is a distributed version control system.
+> Git is free software.
+> EOF
+$ git status
+
+$ git diff readme.txt
+
+$ git add readme.txt
+$ git status
+
+$ git commit -m "add distributed"
+$ git status
+
+$ cat>readme.txt <<-EOF
+> Git is a distributed version control system.
+> Git is free software distributed under the GPL.
+> EOF
+$ git add readme.txt
+$ git commit -m "add GPL"
+
+$ git log
+$ git log --pretty=oneline
+
+$ git reset --hard HEAD^
+$ cat readme.txt
+$ git log
+
+$ git reset --hard commit_id
+$ cat readme.txt
+
+$ git reflog
+$ git reset --hard commit_id
+
+
+# 工作区和暂存区
+$ cat>readme.txt <<-EOF
+> Git is a distributed version control system.
+> Git is free software distributed under the GPL.
+> Git has a mutable index called stage.
+> EOF
+$ touch LICENSE
+$ git status
+
+$ git add readme.txt
+$ git add LICENSE
+$ git status
+
+$ git commit -m "understand how stage works"
+$ git status
+
+# 管理修改
+$ cat>readme.txt <<-EOF
+> Git is a distributed version control system.
+> Git is free software distributed under the GPL.
+> Git has a mutable index called stage.
+> Git tracks changes.
+> EOF
+$ git add readme.txt
+$ git status
+
+$ cat>readme.txt <<-EOF
+> Git is a distributed version control system.
+> Git is free software distributed under the GPL.
+> Git has a mutable index called stage.
+> Git tracks changes of files.
+> EOF
+$ git commit -m "git tracks changes"
+$ git status
+
+$ git diff HEAD -- readme.txt 
+
+$ git add readme.txt
+$ git commit -m "git tracks changes"
+$ git status
+
+
+# 撤销修改
+$ cat>readme.txt <<-EOF
+> Git is a distributed version control system.
+> Git is free software distributed under the GPL.
+> Git has a mutable index called stage.
+> Git tracks changes of files.
+> My stupid boss still prefers SVN.
+> EOF
+
+#$ git checkout -- readme.txt
+$ git restore readme.txt
+$ cat readme.txt
+
+$ cat>readme.txt <<-EOF
+> Git is a distributed version control system.
+> Git is free software distributed under the GPL.
+> Git has a mutable index called stage.
+> Git tracks changes of files.
+> My stupid boss still prefers SVN.
+> EOF
+$ git add readme.txt
+
+$ git status
+#$ git reset HEAD readme.txt
+$ git restore --staged readme.txt
+$ git status
+
+#$ git checkout -- readme.txt
+$ git restore readme.txt
+$ git status
+
+
+
+# 删除文件
+$ touch test.txt
+$ git add test.txt
+$ git commit -m "add test.txt"
+
+$ rm test.txt
+$ git status
+
+$ git rm test.txt
+#$ git add test.txt
+$ git commit -m "remove test.txt"
+
+#$ git checkout -- test.txt
+$ git restore test.txt
+
+$ git rm test.txt
+$ git restore --staged test.txt
+$ git restore test.txt
+
+
+
+# 远程仓库
+$ ssh-keygen -t rsa -C "qq378287007@163.com"
+$ cat ~/.ssh/id_rsa.pub
+
+$ git remote add origin git@github.com:qq378287007/learngit.git
+$ git push -u origin master
+
+$ git push origin master
+
+$ git remote -v
+$ git remote rm origin
+
+# 远程库克隆
+$ git clone git@github.com:qq378287007/gitskills.git
+
+
+# 分支管理
+#$ git checkout -b dev
+$ git switch -c dev
+
+$ git branch dev
+#$ git checkout dev
+$ git switch master
+
+$ git branch
+
+$ echo "Creating a new branch is quick." >> readme.txt
+$ git add readme.txt 
+$ git commit -m "branch test"
+
+#$ git checkout master
+$ git switch master
+$ git merge dev
+$ git branch -d dev
+$ git branch
+
+
+
+
+
+
+# 标签管理
+$ git branch
+$ git checkout master
+
+$ git tag v1.0
+$ git tag
+
+$ git log --pretty=oneline --abbrev-commit
+$ git tag v0.9 commit_id
+$ git tag
+$ git show v0.9
+
+$ git tag -a v0.1 -m "version 0.1 released" commit_id
+$ git show v0.1
+
+
+
+
+
+
+
+
+
+
+# 自定义Git
+$ git config --global color.ui true
+
+# 忽略特殊文件
+
+$ cat .gitignore
+
+# Windows:
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Python:
+*.py[cod]
+*.so
+*.egg
+*.egg-info
+dist
+build
+
+# My configurations:
+db.ini
+deploy_key_rsa
+
+# 排除所有.开头的隐藏文件:
+.*
+# 排除所有.class文件:
+*.class
+
+# 不排除.gitignore和App.class:
+!.gitignore
+!App.class
+
+# 配置别名
+$ git config --global alias.st status
+$ git st
+
+$ git config --global alias.co checkout
+$ git config --global alias.ci commit
+$ git config --global alias.br branch
+$ git ci -m "bala bala bala..."
+
+$ git config --global alias.unstage 'reset HEAD'
+$ git unstage test.py
+
+$ git config --global alias.last 'log -1'
+$ git last
+
+$git config --global alias.lg "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
+$ git lg
+
+$ cat .git/config
+$ cat ~/.gitconfig
+
+
+
+
+
+
+
+
+
